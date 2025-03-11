@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Admin; // إضافة استيراد نموذج Admin
 use Illuminate\Support\Facades\Route;
 
 class UserAuthController extends Controller
@@ -14,7 +15,7 @@ class UserAuthController extends Controller
             'email'=>'required|string|email|unique:users',
             'password'=>'required|min:8'
         ]);
-        $users= User::create([
+        $user = User::create([
             'name' => $registerUserData['name'],
             'email' => $registerUserData['email'],
             'password' => Hash::make($registerUserData['password']),
@@ -23,6 +24,7 @@ class UserAuthController extends Controller
             'message' => 'User Created ',
         ]);
     }
+    
     public function login(Request $request){
         $loginUserData = $request->validate([
             'email'=>'required|string|email',
@@ -34,16 +36,49 @@ class UserAuthController extends Controller
                 'message' => 'Invalid Credentials'
             ],401);
         }
-        $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+        
+        // إضافة إنشاء token للمستخدم
+        $token = $user->createToken('UserToken')->plainTextToken;
+        
         return response()->json([
-            'access_token' => $token,
-        ]);
+            'message' => 'Login successful',
+            'token' => $token
+        ], 200);
     }
+    
     public function logout(){
         auth()->user()->tokens()->delete();
     
         return response()->json([
           "message"=>"logged out"
         ]);
+    }
+    
+    public function adminLogin(Request $request){
+        $loginUserData = $request->validate([
+            'email' => 'required|string|email',
+            'password' => 'required|min:8'
+        ]);
+    
+        $admin = Admin::where('email', $loginUserData['email'])->first();
+    
+        if (!$admin) {
+            return response()->json([
+                'message' => 'Invalid Credentials'
+            ], 401);
+        }
+    
+        if ($admin->password !== $loginUserData['password']) {
+            return response()->json([
+                'message' => 'Invalid Credentials'
+            ], 401);
+        }
+    
+        $token = $admin->createToken('AdminToken')->plainTextToken;
+    
+        return response()->json([
+            'message' => 'admin Login successful',
+            'token' => $token
+        ], 200);
     }
 }

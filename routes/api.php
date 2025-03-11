@@ -8,7 +8,8 @@ use App\Http\Controllers\UserAuthController;
 Route::post('register', [UserAuthController::class, 'register']);
 Route::post('login', [UserAuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('logout', [UserAuthController::class, 'logout']);
-
+Route::post('admin/login', [UserAuthController::class, 'adminLogin']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
