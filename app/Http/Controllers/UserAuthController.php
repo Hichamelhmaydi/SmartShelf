@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Admin; // إضافة استيراد نموذج Admin
+use App\Models\Admin; 
 use Illuminate\Support\Facades\Route;
 
 class UserAuthController extends Controller
@@ -37,7 +37,6 @@ class UserAuthController extends Controller
             ],401);
         }
         
-        // إضافة إنشاء token للمستخدم
         $token = $user->createToken('UserToken')->plainTextToken;
         
         return response()->json([
