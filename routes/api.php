@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\RayonController;
+use App\Http\Controllers\ProduitController;
 
 
 Route::post('register', [UserAuthController::class, 'register']);
@@ -16,3 +17,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::apiResource('categories', CategorieController::class);
 Route::apiResource('rayons', RayonController::class);
+Route::apiResource('produits', ProduitController::class);
