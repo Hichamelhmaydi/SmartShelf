@@ -76,12 +76,11 @@ class ProduitController extends Controller
             return response()->json(["message" => "Produit not found"], 404);
         }
     }
-    public function search (Request $request ) {
-        $produit = Produit::where('produits.nom','=',$request->nom)->get();
-        if($produit){
-            return response()->json($produit, 200);
-        }else{
+    public function search(Request $request){
+        $produits = Produit::where('nom', '=', $request->nom)->get();
+        if ($produits->isEmpty()) {
             return response()->json(["message" => "Produit not found"], 404);
         }
+        return response()->json($produits, 200);
     }
 }
