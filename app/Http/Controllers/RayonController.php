@@ -73,5 +73,4 @@ class RayonController extends Controller
             'produits' => $rayon->produits
         ], 200);
     }
-    
 }
