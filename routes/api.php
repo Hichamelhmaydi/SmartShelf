@@ -21,3 +21,4 @@ Route::apiResource('rayons', RayonController::class);
 Route::apiResource('produits', ProduitController::class);
 Route::get('statistiques', [StatistiqueController::class, 'index']);
 Route::get('list',[ProduitController::class,'list']);
+Route::post('produits/{nom}',[ProduitController::class,'search']);
