@@ -58,4 +58,20 @@ class RayonController extends Controller
             ], 404);
         }
     }
+    public function Produits($id)
+    {
+        $rayon = Rayon::with('produits')->find($id); 
+    
+        if (!$rayon) {
+            return response()->json([
+                'message' => 'Rayon not found'
+            ], 404);
+        }
+    
+        return response()->json([
+            'rayon' => $rayon->description, 
+            'produits' => $rayon->produits
+        ], 200);
+    }
+    
 }

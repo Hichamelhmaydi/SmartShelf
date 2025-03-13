@@ -8,7 +8,7 @@ use App\Http\Controllers\RayonController;
 use App\Http\Controllers\ProduitController;
 use App\Http\Controllers\StatistiqueController;
 
-
+Route::get('rayon/{id}/produits', [RayonController::class, 'Produits']);
 Route::post('register', [UserAuthController::class, 'register']);
 Route::post('login', [UserAuthController::class, 'login']);
 Route::middleware('auth:sanctum')->post('logout', [UserAuthController::class, 'logout']);
